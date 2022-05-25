@@ -1,0 +1,18 @@
+package org.jsp.jdbcApp;
+
+public class JdbcDemo
+{
+	public static void main(String[] args) 
+	{
+		try
+		{
+			Class.forName("com.mysql.jdbc.driver");
+			System.out.println("driver class loaded and regester");
+		} catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
+
+

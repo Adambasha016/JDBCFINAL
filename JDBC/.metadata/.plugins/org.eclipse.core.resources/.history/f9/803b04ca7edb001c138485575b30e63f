@@ -1,0 +1,99 @@
+package org.matathalli.jspApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import com.mysql.jdbc.PreparedStatement;
+
+public class JdbcTransactionDemo {
+
+	public static void main(String[] args) 
+	{
+		Connection con=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		String iQury1="insert into jspider.Studentedu values(?,?,?)";
+		String iQury2="insert into jspider.Studentper values(?,?,?,?)";
+		Scanner sc= new Scanner(System.in);
+		System.out.println("enter id student");
+		int id=sc.nextInt();
+		System.out.println("enter student name");
+		String name=sc.next();
+		System.out.println("enter perc");
+		double perc=sc.nextDouble();
+		System.out.println("enter place ");
+		String  place=sc.next();
+		sc.close();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con=DriverManager.getConnection("jdbc:mysql://localhost:3306?user=root&password=mohan");
+			//Disable the auto commit mode before the transaction but after establishing the connection
+			con.setAutoCommit(false);
+			//create platform
+			pstmt1=(PreparedStatement) con.prepareStatement(iQury1);
+			//set the data for the place holder
+			pstmt1.setInt(1, id);
+			pstmt1.setString(2, name);
+			pstmt1.setDouble(3, perc);
+			pstmt1.executeUpdate();
+			System.out.println("data inserted to student education");
+			pstmt2=(PreparedStatement) con.prepareStatement(iQury2);
+			pstmt2.setInt(1, id);
+			pstmt2.setString(2, name);
+			pstmt2.setDouble(3, perc);
+			pstmt2.setString(4, place);
+			System.out.println("data inserted for student percenal detailes");
+			//save trasaction explicity
+			con.commit();
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			try {
+				con.rollback();
+				System.out.println("rollback out the transaction");
+			} catch (SQLException e1)
+			{
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		finally 
+		{
+			if(pstmt2!=null)
+
+			{
+				try {
+					pstmt2.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(pstmt1!=null)
+			{
+				try {
+					pstmt1.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null)
+			{
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("all costely resouers are closed");
+
+
+	}
+	
+
+}
+

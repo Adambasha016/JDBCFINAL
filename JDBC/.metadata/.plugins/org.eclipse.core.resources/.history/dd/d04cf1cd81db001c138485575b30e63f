@@ -1,0 +1,15 @@
+package org.basic.java;
+
+public class Internally {
+
+	public static void main(String[] args) 
+	{
+		int a,b;
+		a=5;
+		b=6;
+		//System.out.println(a+b) ;
+		System.out.println("hehhfhuhfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffhfkhdjhjdshfhf");
+
+	}
+
+}

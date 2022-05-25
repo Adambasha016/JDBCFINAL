@@ -1,0 +1,23 @@
+package org.jsp.marathalli.jdbcApp;
+
+import java.sql.Connection;
+import java.sql.Statement;
+
+public class JdbcDemo {
+
+	public static void main(String[] args) 
+	{
+		Connection con=null;
+		Statement stmt=null;
+		try
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver class loaded and registered");
+		} catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+
+}

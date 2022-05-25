@@ -1,0 +1,11 @@
+package org.blg.marathalli.jspiderApp;
+
+public class BatchStmtDemo
+{
+	public static void main(String[] args)
+	{
+		
+		
+	}
+
+}

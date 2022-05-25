@@ -1,0 +1,43 @@
+package org.jsp.marathalli.jdbeApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import com.mysql.jdbc.PreparedStatement;
+
+public class JdbcFetchDemo {
+
+	public static void main(String[] args)
+	{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String  sQry="SELECT * FROM JSPIDER.STUDENT WHERE ID=?";
+		Scanner sc=new Scanner(System.in);
+		System.out.println("please enter the id");
+		int uid=sc.nextInt();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			DriverManager.getConnection("jdbc:mysql://localhost:3306?user=root&password=mohan");
+			pstmt=con.prepareStatement(sQry);
+			// set values for placeholders befpre execution//
+			pstmt.setInt(1, uid);
+			rs=pstmt.executeQuery();
+			if(rs.next())
+			{
+				int id=rs.getInt(1);
+				String name =rs.getString(2);
+				String branch =rs.getString("branch");
+				double perc=rs.getDouble(4);
+				System.out.println(id+" "+name+" "+branch+" "+perc);
+				
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}
